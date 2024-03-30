@@ -1,20 +1,19 @@
 <?php
 // config.php
+$servername = "localhost";
+$username = "root"; // Your database username
+$password = ""; // Your database password
+$dbname = "reddit_clone"; // Your database name
 
-// Database credentials
-$servername = "localhost"; // the hostname you need to connect to (e.g. localhost or an IP address)
-$username = "database_user"; // your database username
-$password = "database_password"; // your database password
-$dbname = "reddit_clone"; // your database name
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-// Create a new database connection instance
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    // Set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully"; 
-} catch(PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 ?>

@@ -1,20 +1,20 @@
 <?php
-// Database configuration
-$host = 'localhost'; // Host name, usually "localhost" with XAMPP
-$dbname = 'reddit_clone'; // The actual database name
-$username = 'root'; // Default XAMPP username
-$password = ''; // Default XAMPP password is empty
+// config.php
 
-// Data Source Name (DSN) contains the information required to connect to the database
-$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
+// Database credentials
+$servername = "localhost"; // the hostname you need to connect to (e.g. localhost or an IP address)
+$username = "database_user"; // your database username
+$password = "database_password"; // your database password
+$dbname = "reddit_clone"; // your database name
 
-// Create a PDO instance as db connection
+// Create a new database connection instance
 try {
-    $pdo = new PDO($dsn, $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     // Set the PDO error mode to exception
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully"; // If connection is successful, show a message
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully"; 
 } catch(PDOException $e) {
-    echo "Connection failed: " . $e->getMessage(); // If connection fails, show the error
+    echo "Connection failed: " . $e->getMessage();
 }
+
 ?>

@@ -1,65 +1,58 @@
 <?php
-require 'config.php';
+// This should be in a separate config.php file:
+$servername = "localhost";
+$username = "root"; // Your DB username
+$password = ""; // Your DB password
+$dbname = "reddit_clone"; // Your DB name
 
-$message = '';
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // collect value of input field
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
-
-    if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
-        $message = 'All fields are required';
-    } elseif ($password !== $confirm_password) {
-        $message = 'Passwords must match';
-    } else {
-        // Check for duplicates
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ? OR email = ?");
-        $stmt->execute([$username, $email]);
-        $duplicate = $stmt->fetchColumn();
-
-        if ($duplicate) {
-            $message = 'Username or Email has already been taken';
-        } else {
-            // Hash the password
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-            // Insert new user
-            $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-            $stmt->execute([$username, $email, $hashed_password]);
-
-            if ($stmt->rowCount()) {
-                $message = 'Registration successful';
-                // Redirect to login page or anywhere you want
-                header('Location: login.php');
-                exit;
-            } else {
-                $message = 'Registration failed';
-            }
-        }
-    }
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
 }
-?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
-    <h2>Register</h2>
-    <?php if (!empty($message)): ?>
-        <p><?= $message ?></p>
-    <?php endif; ?>
-    <form action="registration.php" method="post">
-        Username: <input type="text" name="username" required><br>
-        Email: <input type="email" name="email" required><br>
-        Password: <input type="password" name="password" required><br>
-        Confirm Password: <input type="password" name="confirm_password" required><br>
-        <input type="submit" value="Register">
-    </form>
-</body>
-</html>
+// Function to sanitize data to prevent SQL injection
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // Assign and sanitize POST data
+  $username = test_input($_POST["username"]);
+  $password = test_input($_POST["password"]);
+  $email = test_input($_POST["email"]);
+
+  // Check if user exists
+  $stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
+  $stmt->bind_param("s", $username);
+  $stmt->execute();
+  $stmt->store_result();
+  
+  if($stmt->num_rows == 0) {
+    // No user exists, proceed with registration
+    $stmt->close();
+    $insert = $conn->prepare("INSERT INTO users (username, password, email) VALUES (?, ?, ?)");
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Hash the password before saving to the database
+    $insert->bind_param("sss", $username, $hashed_password, $email);
+    $insert->execute();
+    
+    if ($insert->affected_rows > 0) {
+      echo "New record created successfully";
+    } else {
+      echo "Error: " . $insert->error;
+    }
+    $insert->close();
+  } else {
+    // User exists
+    echo "User already exists";
+  }
+}
+
+$conn->close();
+?>

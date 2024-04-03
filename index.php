@@ -1,13 +1,10 @@
 <?php
 session_start();
-require 'config.php'; // Zorg dat je databaseconfiguratie hier inbegrepen is
+require_once 'config.php'; // Zorg ervoor dat je de juiste databaseverbinding hier hebt.
 
-// Haal alle posts uit de database
-$sql = "SELECT p.post_id, p.user_id, p.text_content, p.image_path, p.video_path, p.created_at, u.username FROM posts p JOIN users u ON p.user_id = u.id";
+$sql = "SELECT * FROM posts ORDER BY created_at DESC";
 $result = $conn->query($sql);
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,28 +17,18 @@ $result = $conn->query($sql);
         <p>Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>! You are logged in.</p>
         <a href="create_post.php">Create Post</a>
         <a href="logout.php">Logout</a>
-
+        
         <!-- Hier worden de posts weergegeven -->
-        <?php if($result && $result->num_rows > 0): ?>
-            <div id="posts">
-                <?php while($row = $result->fetch_assoc()): ?>
-                    <div class="post">
-                        <h2><?php echo htmlspecialchars($row['username']); ?></h2>
-                        <p><?php echo htmlspecialchars($row['text_content']); ?></p>
-                        <?php if($row['image_path']): ?>
-                            <img src="<?php echo htmlspecialchars($row['image_path']); ?>" alt="Post image">
-                        <?php endif; ?>
-                        <?php if($row['video_path']): ?>
-                            <video src="<?php echo htmlspecialchars($row['video_path']); ?>" controls></video>
-                        <?php endif; ?>
-                        <span>Posted on: <?php echo htmlspecialchars($row['created_at']); ?></span>
-                    </div>
-                <?php endwhile; ?>
-            </div>
+        <?php if($result->num_rows > 0): ?>
+            <?php while($row = $result->fetch_assoc()): ?>
+                <div>
+                    <p><?php echo htmlspecialchars($row['text_content']); ?></p>
+                </div>
+            <?php endwhile; ?>
         <?php else: ?>
             <p>No posts found.</p>
         <?php endif; ?>
-
+        
     <?php else: ?>
         <p>Welcome, please <a href="login.php">login</a> or <a href="registration.php">register</a> to start.</p>
     <?php endif; ?>

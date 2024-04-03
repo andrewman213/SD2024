@@ -1,21 +1,26 @@
 <?php
 session_start();
-require_once 'config.php'; // Zorg ervoor dat je de juiste databaseverbinding hier hebt.
+require 'config.php';
 
-if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['loggedin'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['id'])) {
     $text_content = $_POST['text_content'];
+    // Verwerk en sla de afbeelding/video op, genereer paden
+    $image_path = ''; // Stel in op de opgeslagen bestandspad
+    $video_path = ''; // Stel in op de opgeslagen bestandspad
 
-    $stmt = $conn->prepare("INSERT INTO posts (user_id, text_content) VALUES (?, ?)");
-    $stmt->bind_param("is", $_SESSION['id'], $text_content);
-    
+    // Bereid de SQL-query voor
+    $stmt = $conn->prepare("INSERT INTO posts (user_id, text_content, image_path, video_path) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("isss", $_SESSION['id'], $text_content, $image_path, $video_path);
+
+    // Voer de query uit
     if($stmt->execute()) {
-        header("Location: index.php");
+        $stmt->close();
+        $conn->close();
+        header("Location: index.php"); // Redirect naar index.php
         exit;
     } else {
         echo "Er is een fout opgetreden: " . $conn->error;
     }
-    $stmt->close();
-    $conn->close();
 } else {
     echo "Niet toegestaan.";
 }

@@ -1,10 +1,13 @@
 <?php
 session_start();
 <<<<<<< HEAD
+<<<<<<< HEAD
 require_once 'config.php'; // Zorg ervoor dat je de juiste databaseverbinding hier hebt.
 
 $sql = "SELECT * FROM posts ORDER BY created_at DESC";
 $result = $conn->query($sql);
+=======
+>>>>>>> parent of 4df4a62 (text post)
 =======
 >>>>>>> parent of 4df4a62 (text post)
 ?>
@@ -20,6 +23,7 @@ $result = $conn->query($sql);
         <p>Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>! You are logged in.</p>
         <a href="logout.php">Logout</a>
 <<<<<<< HEAD
+<<<<<<< HEAD
         
         <!-- Hier worden de posts weergegeven -->
         <?php if($result->num_rows > 0): ?>
@@ -32,6 +36,8 @@ $result = $conn->query($sql);
             <p>No posts found.</p>
         <?php endif; ?>
         
+=======
+>>>>>>> parent of 4df4a62 (text post)
 =======
 >>>>>>> parent of 4df4a62 (text post)
     <?php else: ?>

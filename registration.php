@@ -35,9 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $insert->execute();
           
           if ($insert->affected_rows > 0) {
-              // Redirect to login page after successful registration
-              header("Location: login.php");
-              exit();
+              echo "New record created successfully";
           } else {
               echo "Error: " . $insert->error;
           }

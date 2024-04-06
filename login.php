@@ -64,12 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $_SESSION["username"] = $username;
                             $_SESSION["is_admin"] = $is_admin; // Store the admin status in session
 
-                            // Redirect user to admin page if admin, else to regular page
-                            if ($is_admin) {
-                                header("location: adminindex.php");
-                            } else {
-                                header("location: index.php");
-                            }
+                            // Redirect user to the index page
+                            header("location: index.php");
                             exit; // It's important to stop the script after redirect
                         } else {
                             // Display an error message if password is not valid
@@ -93,9 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
-<!-- Rest of the HTML remains the same -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -34,30 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
     exit;
 }
 
-
-
-// Aanname: $conn is je databaseverbinding
-// Aanname: gebruiker_id is opgeslagen in $_SESSION['id'] na inloggen
-
-$query = "SELECT post_id, text_content, image_path FROM posts WHERE user_id = ?";
-if($stmt = $conn->prepare($query)){
-    // Bind de parameter
-    $stmt->bind_param("i", $_SESSION['id']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    while($row = $result->fetch_assoc()){
-        // Hiermee kun je elke post en bijbehorende afbeelding weergeven
-        echo "<div>";
-        echo "<h3>" . htmlspecialchars($row['text_content']) . "</h3>";
-        if($row['image_path']){
-            echo "<img src='" . htmlspecialchars($row['image_path']) . "' alt='post image'>";
-        }
-        echo "</div>";
-    }
-}
-
-
 $stmt->close();
 ?>
 
@@ -66,22 +42,26 @@ $stmt->close();
 <head>
     <meta charset="UTF-8">
     <title>Manage Profile</title>
+    <link href="manage_profile.css" rel="stylesheet" type="text/css"> <!-- De CSS-bestandsnaam komt overeen met de PHP-bestandsnaam -->
 </head>
 <body>
     <h1>Profile Management</h1>
     <p>Welcome <?php echo htmlspecialchars($_SESSION['username']); ?>, manage your profile here.</p>
     
-    <h2>Your Posts</h2>
-    <?php while($row = $result->fetch_assoc()): ?>
-        <div>
-            <h3><?php echo htmlspecialchars($row['text_content']); ?></h3>
-            <!-- Voeg hier meer details toe zoals afbeeldingen als je die wilt tonen -->
-            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                <input type="hidden" name="post_id" value="<?php echo $row['post_id']; ?>">
-                <input type="submit" value="Delete Post">
-            </form>
-        </div>
-    <?php endwhile; ?>
-    $conn->close();
+    <div class="posts-container">
+        <?php while($row = $result->fetch_assoc()): ?>
+            <div class="post-item">
+                <h3><?php echo htmlspecialchars($row['text_content']); ?></h3>
+                <?php if ($row['image_path']): ?>
+                    <img src="/SD2024/uploads/<?php echo htmlspecialchars($row['image_path']); ?>" alt="Post Image" class="post-image">
+                <?php endif; ?>
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="delete-form">
+                    <input type="hidden" name="post_id" value="<?php echo $row['post_id']; ?>">
+                    <input type="submit" value="Delete Post" class="delete-button">
+                </form>
+            </div>
+        <?php endwhile; ?>
+    </div>
+    <?php $conn->close(); ?>
 </body>
 </html>

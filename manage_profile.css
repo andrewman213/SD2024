@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.posts-container {
+    margin: 20px;
+}
+
+.post-item {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    position: relative;
+}
+
+.post-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.delete-form {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.delete-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #ff0000;
+}  

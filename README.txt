@@ -1,23 +1,33 @@
-je zult waarschijnlijk manually in je terminal toestemming moeten geven om images te kunnen plaatsen, dit doe je als volgt:
+Reddit Clone Project
+--------------------
 
+Introductie:
+Dit is een eenvoudige kloon van Reddit, waarmee gebruikers posts kunnen maken en afbeeldingen kunnen uploaden.
 
-Ontdek welke gebruiker Apache gebruikt:
+Vereisten:
+- PHP 7.4 of hoger
+- MySQL 5.7 of hoger
+- Apache webserver met mod_rewrite ingeschakeld
 
-Open de Terminal op je Mac.
-Voer het volgende commando in en druk op Enter:
-bash
-Copy code
-cat /Applications/XAMPP/xamppfiles/etc/httpd.conf | grep -E '^(User|Group)'
-Onthoud de gebruikersnaam en groep die wordt weergegeven. Dit zijn degenen die Apache gebruikt.
-Ga naar de map met uploads:
+Installatie:
+1. Plaats alle bestanden in de document root van je webserver (bijvoorbeeld `htdocs` in XAMPP).
+2. Importeer `database.sql` in je MySQL-database om de benodigde tabellen aan te maken.
+3. Configureer de databaseverbinding in `config.php` met de juiste gebruikersnaam, wachtwoord en databasenaam.
 
-Open een nieuw Finder-venster.
-Ga naar de map waar je XAMPP-websitebestanden zich bevinden. Dit is meestal iets als /Applications/XAMPP/xamppfiles/htdocs/SD2024.
-Verander de eigendom van de map:
+Gebruik:
+- Bezoek `index.php` om de homepage te zien en posts te bekijken.
+- Gebruik `register.php` om een nieuw account aan te maken.
+- Met `login.php` kun je inloggen op je account.
+- Via `create_post.php` kun je een nieuwe post maken met of zonder afbeelding.
 
-Ga terug naar de Terminal.
-Typ het volgende commando en druk op Enter:
-bash
-Copy code
-sudo chown [gebruikersnaam]:[groep] uploads
-Vervang [gebruikersnaam] en [groep] door de waarden die je hebt ontdekt in stap 1.
+Bestandsstructuur:
+- `config.php`: Database configuratie.
+- `create_post.php`: Formulier voor het maken van een nieuwe post.
+- `uploads/`: Directory waar geüploade afbeeldingen worden opgeslagen.
+
+Opmerkingen:
+- Zorg ervoor dat de `uploads/` directory schrijfrechten heeft. Gebruik `chmod` om de permissies in te stellen als je op een Unix-achtig systeem bent.
+
+Contact:
+Voor vragen kun je me bereiken via andrew.siha@gmail.com
+

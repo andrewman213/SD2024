@@ -9,9 +9,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 require_once 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $text_content = $_POST['text_content'];
+    $text_content = $_POST['text_content'] ?? '';
     $image_path = '';
 
+    // Verwerk de afbeelding als deze bestaat.
     if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
         $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
         $filename = $_FILES["image"]["name"];
@@ -20,16 +21,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (!array_key_exists($ext, $allowed)) die("Error: Invalid file format.");
         if ($filesize > 5 * 1024 * 1024) die("Error: File size is larger than allowed limit.");
+        
+        // Voorkom dat bestanden met dezelfde naam overschreven worden
+        $new_filename = uniqid() . "." . $ext;
+        $image_path = "uploads/" . $new_filename;
 
-        if (file_exists("uploads/" . $filename)) {
-            die($filename . ' already exists.');
-        } else {
-            $image_path = "uploads/" . uniqid() . "." . $ext;
-            move_uploaded_file($_FILES["image"]["tmp_name"], $image_path);
+        if (!move_uploaded_file($_FILES["image"]["tmp_name"], $image_path)) {
+            die('Error: Failed to move uploaded file.');
         }
     }
 
-    if ($text_content !== '' && $image_path !== '') {
+    // Voeg nu de post toe aan de database
+    if ($text_content !== '' || $image_path !== '') {
         $stmt = $conn->prepare("INSERT INTO posts (user_id, text_content, image_path) VALUES (?, ?, ?)");
         $stmt->bind_param("iss", $_SESSION['id'], $text_content, $image_path);
 
@@ -44,7 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,10 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="file" name="image" id="image"><br>
         <input type="submit" value="Upload Post" name="submit">
     </form>
-    <!-- Toegevoegde knop om naar manage_profile.php te gaan -->
     <form action="manage_profile.php" method="get">
         <input type="submit" value="Manage Profile">
     </form>
 </body>
 </html>
-

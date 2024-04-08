@@ -1,17 +1,25 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
 }
 
 .posts-container {
     margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .post-item {
-    border: 1px solid #ddd;
-    padding: 20px;
+    border-bottom: 1px solid #eee;
+    padding: 16px;
     margin-bottom: 10px;
-    border-radius: 4px;
-    position: relative;
+}
+
+.post-item:last-child {
+    border-bottom: none;
 }
 
 .post-image {
@@ -20,20 +28,19 @@ body {
 }
 
 .delete-form {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    margin-top: 10px;
 }
 
 .delete-button {
     background-color: #ff4d4d;
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 10px 15px;
     border-radius: 4px;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .delete-button:hover {
     background-color: #ff0000;
-}  
+}

@@ -1,3 +1,5 @@
+<?php include 'header.php'; ?>
+
 <?php
 // manage_profile.php
 session_start();

@@ -1,0 +1,51 @@
+/* Add this to your style.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: darkred; /* Dark red background */
+    padding: 10px 0; /* Padding around the navigation bar */
+}
+
+header h1 {
+    color: white; /* White text for the heading */
+    text-align: center; /* Center the heading */
+}
+
+nav ul {
+    list-style-type: none; /* Remove bullet points from list items */
+    overflow: hidden; /* Clear floats */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+    text-align: center; /* Center navigation items */
+}
+
+nav li {
+    display: inline; /* Display list items inline */
+    margin-right: 20px; /* Space between navigation items */
+}
+
+nav li a {
+    text-decoration: none; /* Remove underline from links */
+    color: white; /* White text for links */
+    font-weight: bold; /* Make text bold */
+}
+
+nav li a:hover {
+    text-decoration: underline; /* Underline text on hover */
+}
+
+
+/* Fixed header CSS */
+header {
+    position: fixed; /* Fixed position */
+    width: 100%; /* Full width */
+    top: 0; /* Stick to the top */
+    z-index: 1000; /* Make sure it stays on top of other elements */
+}
+
+/* Padding to ensure content isn't hidden behind the fixed header */
+body {
+    padding-top: 60px; /* Adjust based on the actual height of your header */
+}

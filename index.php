@@ -1,3 +1,5 @@
+<?php include 'header.php'; ?>
+
 <?php
 session_start();
 require 'config.php';

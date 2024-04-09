@@ -1,51 +1,66 @@
-/* Add this to your style.css */
-body {
-    font-family: Arial, sans-serif;
+/* Reset margin and padding for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* This ensures padding does not affect total width */
 }
 
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    padding-top: 70px; /* Space for the fixed header, adjust as needed */
+}
+
+/* Header styles */
 header {
-    background-color: darkred; /* Dark red background */
-    padding: 10px 0; /* Padding around the navigation bar */
+    background-color: darkred;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0; /* Added to ensure the header extends to the left edge */
+    width: 100%;
+    z-index: 1000;
+    transition: padding 0.3s, transform 0.3s, top 0.3s; /* Smooth transition for the header */
 }
 
 header h1 {
-    color: white; /* White text for the heading */
-    text-align: center; /* Center the heading */
+    text-align: center;
+    margin: 0;
+    padding: 10px 0;
 }
 
 nav ul {
-    list-style-type: none; /* Remove bullet points from list items */
-    overflow: hidden; /* Clear floats */
-    padding: 0; /* Remove padding */
-    margin: 0; /* Remove margins */
-    text-align: center; /* Center navigation items */
+    list-style-type: none;
+    text-align: center;
+    background-color: darkred; /* Ensure background color fills nav */
 }
 
-nav li {
-    display: inline; /* Display list items inline */
-    margin-right: 20px; /* Space between navigation items */
+nav ul li {
+    display: inline;
+    margin-right: 20px;
 }
 
-nav li a {
-    text-decoration: none; /* Remove underline from links */
-    color: white; /* White text for links */
-    font-weight: bold; /* Make text bold */
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px; /* Add padding for better clickability */
 }
 
-nav li a:hover {
-    text-decoration: underline; /* Underline text on hover */
+nav ul li a:hover {
+    text-decoration: underline;
 }
 
+/* Scroll effect */
+header.scrolling-active {
+    padding: 5px 0;
+}
 
-/* Fixed header CSS */
+header.scrolling-active nav ul li a {
+    transform: scale(0.9);
+}
+
+/* Hide header on scroll down */
 header {
-    position: fixed; /* Fixed position */
-    width: 100%; /* Full width */
-    top: 0; /* Stick to the top */
-    z-index: 1000; /* Make sure it stays on top of other elements */
-}
-
-/* Padding to ensure content isn't hidden behind the fixed header */
-body {
-    padding-top: 60px; /* Adjust based on the actual height of your header */
+    transition: top 0.3s; /* Smooth transition for hiding and showing the header */
 }

@@ -23,7 +23,10 @@ $stmt->bind_param("ss", $searchString, $searchString);
 $stmt->execute();
 $result = $stmt->get_result();
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 9e3a193 (commenten functie)
 ?>
 
 <!DOCTYPE html>
@@ -31,6 +34,7 @@ $result = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -43,10 +47,23 @@ $result = $stmt->get_result();
         <?php endif; ?>
 
         <form class="search-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+=======
+</head>
+<body>
+    <h1>Welcome to My Reddit Clone</h1>
+    <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+        <p>Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>! You are logged in.</p>
+        <a href="create_post.php">Create Post</a>
+        <a href="logout.php">Logout</a>
+
+        <!-- Search form for posts -->
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+>>>>>>> parent of 9e3a193 (commenten functie)
             <input type="text" name="search" placeholder="Search posts" value="<?php echo htmlspecialchars($search); ?>">
             <input type="submit" value="Search">
         </form>
 
+<<<<<<< HEAD
         <?php if ($result && $result->num_rows > 0): ?>
             <div id="posts">
                 <?php while ($row = $result->fetch_assoc()): ?>
@@ -60,6 +77,25 @@ $result = $stmt->get_result();
                         <p class="comment-count"><?php echo $row['comment_count']; ?> comments</p>
                         <?php if ($isAdmin): ?>
                             <form action="delete_post.php" method="post">
+=======
+        <!-- Posts Display -->
+        <?php if($result && $result->num_rows > 0): ?>
+            <div id="posts">
+                <?php while($row = $result->fetch_assoc()): ?>
+                    <div class="post">
+                        <h2><?php echo htmlspecialchars($row['username']); ?></h2>
+                        <p><?php echo htmlspecialchars($row['text_content']); ?></p>
+                        <?php if($row['image_path']): ?>
+                            <img src="<?php echo htmlspecialchars($row['image_path']); ?>" alt="Post image">
+                        <?php endif; ?>
+                        <?php if($row['video_path']): ?>
+                            <video src="<?php echo htmlspecialchars($row['video_path']); ?>" controls></video>
+                        <?php endif; ?>
+                        <span>Posted on: <?php echo htmlspecialchars($row['created_at']); ?></span>
+                        <!-- Delete button for admin -->
+                        <?php if ($isAdmin): ?>
+                            <form action="delete_post.php" method="post" style="display: inline;">
+>>>>>>> parent of 9e3a193 (commenten functie)
                                 <input type="hidden" name="post_id" value="<?php echo $row['post_id']; ?>">
                                 <input type="submit" value="Delete Post">
                             </form>
@@ -98,6 +134,7 @@ $result = $stmt->get_result();
         <?php else: ?>
             <p>No posts found.</p>
         <?php endif; ?>
+<<<<<<< HEAD
     </div>
     <script src="index.js"></script>
     <script>
@@ -114,5 +151,11 @@ $result = $stmt->get_result();
         });
     });
     </script>
+=======
+
+    <?php else: ?>
+        <p>Welcome, please <a href="login.php">login</a> or <a href="registration.php">register</a> to start.</p>
+    <?php endif; ?>
+>>>>>>> parent of 9e3a193 (commenten functie)
 </body>
 </html>

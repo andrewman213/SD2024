@@ -1,5 +1,6 @@
 <?php include 'header.php'; ?>
 
+
 <?php
 session_start();
 
@@ -11,7 +12,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 require_once 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $title = $_POST['title'] ?? ''; // Nieuw
     $text_content = $_POST['text_content'] ?? '';
     $image_path = '';
 
@@ -25,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!array_key_exists($ext, $allowed)) die("Error: Invalid file format.");
         if ($filesize > 5 * 1024 * 1024) die("Error: File size is larger than allowed limit.");
         
+        // Voorkom dat bestanden met dezelfde naam overschreven worden
         $new_filename = uniqid() . "." . $ext;
         $image_path = "uploads/" . $new_filename;
 
@@ -33,17 +34,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    if ($title !== '' && ($text_content !== '' || $image_path !== '')) {
-        $stmt = $conn->prepare("INSERT INTO posts (user_id, title, text_content, image_path) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("isss", $_SESSION['id'], $title, $text_content, $image_path);
+    // Voeg nu de post toe aan de database
+    if ($text_content !== '' || $image_path !== '') {
+        $stmt = $conn->prepare("INSERT INTO posts (user_id, text_content, image_path) VALUES (?, ?, ?)");
+        $stmt->bind_param("iss", $_SESSION['id'], $text_content, $image_path);
 
         if ($stmt->execute()) {
             $stmt->close();
             header("Location: index.php");
             exit;
         } else {
-            echo 'Post creation failed: ' . htmlspecialchars($conn->error);
-            $stmt->close();
+            die('Post creation failed: ' . $conn->error);
         }
     }
     $conn->close();
@@ -58,15 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <h1>Create a new post</h1>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required><br>
-
         <label for="text_content">Post Content:</label>
-        <textarea id="text_content" name="text_content" required></textarea><br>
-
+        <textarea id="text_content" name="text_content"></textarea><br>
         <label for="image">Select image to upload:</label>
         <input type="file" name="image" id="image"><br>
-
         <input type="submit" value="Upload Post" name="submit">
     </form>
     <form action="manage_profile.php" method="get">

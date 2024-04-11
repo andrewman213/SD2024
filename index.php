@@ -23,6 +23,7 @@ $stmt->bind_param("ss", $searchString, $searchString);
 $stmt->execute();
 $result = $stmt->get_result();
 
+
 ?>
 
 <!DOCTYPE html>

@@ -64,3 +64,133 @@ header.scrolling-active nav ul li a {
 header {
     transition: top 0.3s; /* Smooth transition for hiding and showing the header */
 }
+/* index.css - Gecombineerde styles */
+
+/* Reset margins and paddings for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Basic styling */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    padding-top: 100px; /* Aangepast om overlap met de vaste header te voorkomen */
+}
+
+/* Header styling */
+header {
+    background-color: #333; /* Je kunt de kleur kiezen die je wilt */
+    color: white;
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+    transition: padding 0.3s, transform 0.3s; /* Smooth transition for the header */
+}
+
+header h1 {
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Link styles */
+a {
+    color: white; /* Aangepast voor betere zichtbaarheid */
+    text-decoration: none;
+}
+
+/* Navigation bar styles */
+nav ul {
+    padding: 0;
+    list-style: none;
+    background: #333;
+    text-align: center;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    padding: .5rem 1rem;
+    display: inline-block;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+}
+
+/* Main content area styling */
+#posts {
+    background: white;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px;
+}
+
+.post {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.post img, .post video {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Comment form styles */
+form {
+    margin-top: 20px;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+input[type="submit"] {
+    background: #333;
+    color: white;
+    border: 0;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background: #555;
+}
+
+/* Footer styles */
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive styles (indien nodig) */
+@media (max-width: 768px) {
+    /* Voeg hier je responsive styles toe */
+}
+
+
+
+/* Verberg header bij het naar beneden scrollen */
+header {
+    transition: top 0.3s; /* Soepele overgang voor het verbergen en tonen van de header */
+}
+
+/* Rest van je CSS... */
+

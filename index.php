@@ -7,26 +7,20 @@ require 'config.php';
 $search = "";
 $isAdmin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'];
 
+// Check if a search was made
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
     $search = trim($_POST['search']);
 }
 
 $searchString = '%' . $search . '%';
-$sql = "SELECT p.post_id, p.user_id, p.title, p.text_content, p.image_path, p.created_at, u.username,
-           (SELECT COUNT(*) FROM comments WHERE post_id = p.post_id) as comment_count
-        FROM posts p
-        JOIN users u ON p.user_id = u.id
-        WHERE p.title LIKE ? OR p.text_content LIKE ?
-        ORDER BY p.created_at DESC";
+$sql = "SELECT p.post_id, p.user_id, p.text_content, p.image_path, p.video_path, p.created_at, u.username 
+        FROM posts p 
+        JOIN users u ON p.user_id = u.id 
+        WHERE p.text_content LIKE ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ss", $searchString, $searchString);
+$stmt->bind_param("s", $searchString);
 $stmt->execute();
 $result = $stmt->get_result();
-
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of 9e3a193 (commenten functie)
 ?>
 
 <!DOCTYPE html>
@@ -34,20 +28,7 @@ $result = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
-<<<<<<< HEAD
-    <link rel="stylesheet" href="index.css">
-</head>
-<body>
-    <div class="content">
-        <h1>Welcome to Reddit Clone</h1>
-        <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-            <p>Hello, <?php echo htmlspecialchars($_SESSION['username'] ?? ''); ?>! You are logged in.</p>
-            <a href="create_post.php">Create Post</a>
-            <a href="logout.php">Logout</a>
-        <?php endif; ?>
-
-        <form class="search-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-=======
+    <link href="index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <h1>Welcome to My Reddit Clone</h1>
@@ -55,107 +36,74 @@ $result = $stmt->get_result();
         <p>Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>! You are logged in.</p>
         <a href="create_post.php">Create Post</a>
         <a href="logout.php">Logout</a>
+    <?php endif; ?>
 
-        <!-- Search form for posts -->
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
->>>>>>> parent of 9e3a193 (commenten functie)
-            <input type="text" name="search" placeholder="Search posts" value="<?php echo htmlspecialchars($search); ?>">
-            <input type="submit" value="Search">
-        </form>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <input type="text" name="search" placeholder="Search posts" value="<?php echo htmlspecialchars($search); ?>">
+        <input type="submit" value="Search">
+    </form>
 
-<<<<<<< HEAD
-        <?php if ($result && $result->num_rows > 0): ?>
-            <div id="posts">
-                <?php while ($row = $result->fetch_assoc()): ?>
-                    <div class="post">
-                        <h2><?php echo htmlspecialchars($row['username'] ?? ''); ?>: <?php echo htmlspecialchars($row['title'] ?? ''); ?></h2>
-                        <p><?php echo htmlspecialchars($row['text_content'] ?? ''); ?></p>
-                        <?php if ($row['image_path']): ?>
-                            <img src="<?php echo htmlspecialchars($row['image_path']); ?>" alt="Post image">
-                        <?php endif; ?>
-                        <span>Posted on: <?php echo htmlspecialchars($row['created_at'] ?? ''); ?></span>
-                        <p class="comment-count"><?php echo $row['comment_count']; ?> comments</p>
-                        <?php if ($isAdmin): ?>
-                            <form action="delete_post.php" method="post">
-=======
-        <!-- Posts Display -->
-        <?php if($result && $result->num_rows > 0): ?>
-            <div id="posts">
-                <?php while($row = $result->fetch_assoc()): ?>
-                    <div class="post">
-                        <h2><?php echo htmlspecialchars($row['username']); ?></h2>
-                        <p><?php echo htmlspecialchars($row['text_content']); ?></p>
-                        <?php if($row['image_path']): ?>
-                            <img src="<?php echo htmlspecialchars($row['image_path']); ?>" alt="Post image">
-                        <?php endif; ?>
-                        <?php if($row['video_path']): ?>
-                            <video src="<?php echo htmlspecialchars($row['video_path']); ?>" controls></video>
-                        <?php endif; ?>
-                        <span>Posted on: <?php echo htmlspecialchars($row['created_at']); ?></span>
-                        <!-- Delete button for admin -->
-                        <?php if ($isAdmin): ?>
-                            <form action="delete_post.php" method="post" style="display: inline;">
->>>>>>> parent of 9e3a193 (commenten functie)
+    <?php if($result && $result->num_rows > 0): ?>
+        <div id="posts">
+            <?php while($row = $result->fetch_assoc()): ?>
+                <div class="post">
+                    <h2><?php echo htmlspecialchars($row['username']); ?></h2>
+                    <p><?php echo htmlspecialchars($row['text_content']); ?></p>
+                    <?php if($row['image_path']): ?>
+                        <img src="<?php echo htmlspecialchars($row['image_path']); ?>" alt="Post image">
+                    <?php endif; ?>
+                    <?php if($row['video_path']): ?>
+                        <video src="<?php echo htmlspecialchars($row['video_path']); ?>" controls></video>
+                    <?php endif; ?>
+                    <span>Posted on: <?php echo htmlspecialchars($row['created_at']); ?></span>
+                    <?php if ($isAdmin): ?>
+                        <form action="delete_post.php" method="post">
+                            <input type="hidden" name="post_id" value="<?php echo $row['post_id']; ?>">
+                            <input type="submit" value="Delete Post">
+                        </form>
+                    <?php endif; ?>
+
+                    <?php
+                    // Fetch comment count for the post
+                    $comment_sql = "SELECT COUNT(*) AS comment_count FROM comments WHERE post_id = ?";
+                    $comment_stmt = $conn->prepare($comment_sql);
+                    $comment_stmt->bind_param("i", $row['post_id']);
+                    $comment_stmt->execute();
+                    $comment_result = $comment_stmt->get_result();
+                    $comment_row = $comment_result->fetch_assoc();
+                    $comment_count = $comment_row['comment_count'];
+                    $comment_stmt->close();
+                    ?>
+                    <!-- Display Read Comments button with count -->
+                    <button type="button" onclick="openCommentsModal(<?php echo $row['post_id']; ?>)">
+                        Read Comments (<?php echo $comment_count; ?>)
+                    </button>
+
+                    <div class="comments">
+                        <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                            <form action="add_comment.php" method="post">
                                 <input type="hidden" name="post_id" value="<?php echo $row['post_id']; ?>">
-                                <input type="submit" value="Delete Post">
+                                <textarea name="comment" placeholder="Add a comment..." required></textarea>
+                                <input type="submit" value="Submit Comment">
                             </form>
                         <?php endif; ?>
-
-                        <!-- Comment Form -->
-                        <form action="comment_post.php" method="post">
-                            <input type="hidden" name="post_id" value="<?php echo $row['post_id']; ?>">
-                            <input type="text" name="comment" placeholder="Write a comment...">
-                            <input type="submit" value="Comment">
-                        </form>
-
-                        <!-- Comments weergave -->
-                        <?php
-                        $commentSql = "SELECT c.comment_text, u.username FROM comments c  JOIN users u ON c.user_id = u.id WHERE c.post_id = ?";
-                        $commentStmt = $conn->prepare($commentSql);
-                        $commentStmt->bind_param("i", $row['post_id']);
-                        $commentStmt->execute();
-                        $commentsResult = $commentStmt->get_result();
-
-                        if ($commentsResult && $commentsResult->num_rows > 0): ?>
-                            <div class="comments">
-                                <?php while ($commentRow = $commentsResult->fetch_assoc()): ?>
-                                    <div class="comment">
-                                        <strong><?php echo htmlspecialchars($commentRow['username'] ?? ''); ?>:</strong>
-                                        <p><?php echo htmlspecialchars($commentRow['comment_text'] ?? ''); ?></p>
-                                    </div>
-                                <?php endwhile; ?>
-                            </div>
-                        <?php else: ?>
-                            <p>Geen comments.</p>
-                        <?php endif; ?>
                     </div>
-                <?php endwhile; ?>
-            </div>
+                </div>
+            <?php endwhile; ?>
+        </div>
+   
         <?php else: ?>
-            <p>No posts found.</p>
-        <?php endif; ?>
-<<<<<<< HEAD
-    </div>
-    <script src="index.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const commentForms = document.querySelectorAll('form[action="comment_post.php"]');
-        commentForms.forEach(form => {
-            form.addEventListener('submit', function(event) {
-                const commentInput = this.querySelector('input[name="comment"]');
-                if (!commentInput.value.trim()) {
-                    alert('Comment cannot be empty!');
-                    event.preventDefault();
-                }
-            });
-        });
-    });
-    </script>
-=======
-
-    <?php else: ?>
-        <p>Welcome, please <a href="login.php">login</a> or <a href="registration.php">register</a> to start.</p>
+        <p>No posts found.</p>
     <?php endif; ?>
->>>>>>> parent of 9e3a193 (commenten functie)
+
+    <!-- Modal structure -->
+    <div id="commentsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCommentsModal()">&times;</span>
+            <div id="commentsList"></div> <!-- Comments will be loaded here -->
+        </div>
+    </div>
+
+    <script src="index.js"></script>
 </body>
 </html>

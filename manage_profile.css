@@ -1,50 +1,46 @@
-/* index.css - Gecombineerde styles */
-
-/* Reset margins and paddings for all elements */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Basic styling */
 body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4;
-    padding-top: 80px; /* Aangepast om overlap met de vaste header te voorkomen */
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
 }
 
-/* Header styling */
-header {
-    background-color: #333; /* Je kunt de kleur kiezen die je wilt */
+.posts-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.post-item {
+    border-bottom: 1px solid #eee;
+    padding: 16px;
+    margin-bottom: 10px;
+}
+
+.post-item:last-child {
+    border-bottom: none;
+}
+
+.post-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.delete-form {
+    margin-top: 10px;
+}
+
+.delete-button {
+    background-color: #ff4d4d;
     color: white;
-    padding: 0.5rem 0; /* Aangepast om de header dunner te maken */
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 999;
-    transition: padding 0.3s, transform 0.3s; /* Smooth transition for the header */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-header h1 {
-    margin-left: 1rem; /* Afstand aan de linkerkant voor de titel */
+.delete-button:hover {
+    background-color: #ff0000;
 }
-
-/* Logout link styling */
-.logout-link {
-    margin-right: 1rem; /* Afstand aan de rechterkant voor de logout link */
-    color: white;
-    text-decoration: none;
-}
-
-.logout-link:hover {
-    text-decoration: underline;
-}
-
-/* Overige stijlen blijven ongewijzigd... */
-
-/* Voeg de rest van je CSS hier toe */

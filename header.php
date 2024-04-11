@@ -45,6 +45,5 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
         }, false);
     </script>
     <!-- The rest of the page content goes here -->
-    
 </body>
 </html>

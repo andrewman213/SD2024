@@ -1,4 +1,4 @@
-/* index.css - Gecombineerde styles */
+/* index.css - Combined styles */
 
 /* Reset margins and paddings for all elements */
 * {
@@ -12,14 +12,14 @@ body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     background-color: #f4f4f4;
-    padding-top: 80px; /* Aangepast om overlap met de vaste header te voorkomen */
+    padding-top: 80px; /* Adjusted to prevent overlap with the fixed header */
 }
 
 /* Header styling */
 header {
-    background-color: #333; /* Je kunt de kleur kiezen die je wilt */
+    background-color: #333; /* You can choose the color you want */
     color: white;
-    padding: 0.5rem 0; /* Aangepast om de header dunner te maken */
+    padding: 0.5rem 0; /* Adjusted to make the header thinner */
     position: fixed;
     width: 100%;
     top: 0;
@@ -31,57 +31,12 @@ header {
 }
 
 header h1 {
-    margin-left: 1rem; /* Afstand aan de linkerkant voor de titel */
+    margin-left: 1rem; /* Distance on the left side for the title */
 }
 
 /* Logout link styling */
 .logout-link {
-    margin-right: 1rem; /* Afstand aan de rechterkant voor de logout link */
-    color: white;
-    text-decoration: none;
-}
-
-.logout-link:hover {
-    text-decoration: underline;
-}
-
-/* Overige stijlen blijven ongewijzigd... */
-
-/* Voeg de rest van je CSS hier toe */
-/* index.css */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4;
-    padding-top: 80px;
-}
-
-header {
-    background-color: #333;
-    color: white;
-    padding: 0.5rem 0;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 999;
-    transition: padding 0.3s, transform 0.3s;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-header h1 {
-    margin-left: 1rem;
-}
-
-.logout-link {
-    margin-right: 1rem;
+    margin-right: 1rem; /* Distance on the right side for the logout link */
     color: white;
     text-decoration: none;
 }
@@ -108,4 +63,55 @@ header h1 {
     height: auto;
 }
 
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+}
 
+/* Modal content box styles */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+/* Animation for the modal to slide in from the top */
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Style for the comments list within the modal */
+#commentsList {
+    max-height: 300px; /* Set a max-height for scrollable content */
+    overflow-y: auto;
+}

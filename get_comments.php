@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $post_id = $data['post_id'];
 
     // Prepare SQL to fetch comments. Ensure column names match your database structure.
-    $sql = "SELECT user_id, comment AS comment_text, created_at FROM comments WHERE post_id = ?";
+    $sql = "SELECT user_id, comment, created_at FROM comments WHERE post_id = ?";
 
     if ($stmt = $conn->prepare($sql)) {
         $stmt->bind_param("i", $post_id);

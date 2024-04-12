@@ -139,3 +139,26 @@ header h1 {
 .sort-buttons a:hover {
     background-color: #45a049; /* Darker green on hover */
 }
+
+
+/* CSS aanpassing voor de zoekveld breedte */
+form {
+    max-width: 600px; /* of elke breedte die je verkiest */
+    display: flex; /* zorgt voor een flex container */
+    justify-content: space-between; /* spreidt items uit */
+    padding: 0 15px; /* geeft wat ruimte aan de zijkanten */
+}
+
+input[type="text"] {
+    flex-grow: 1; /* Laat het tekstveld groeien om beschikbare ruimte te vullen */
+    margin-right: 10px; /* Voegt ruimte toe tussen het tekstveld en de zoekknop */
+}
+
+input[type="submit"] {
+    flex-shrink: 0; /* Voorkomt dat de knop krimpt */
+}
+
+
+
+
+

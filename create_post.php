@@ -54,7 +54,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Create Post</title>
+    <link rel="stylesheet" href="create_post.css"> 
 </head>
+
 <body>
     <h1>Create a new post</h1>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">

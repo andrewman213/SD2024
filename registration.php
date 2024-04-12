@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="registration.css">
+
+
 
 <?php
 // Include the database configuration file
@@ -54,7 +57,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,14 +64,30 @@ $conn->close();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
+    <link rel="stylesheet" href="registration.css"> <!-- Link to your CSS file -->
 </head>
 <body>
-    <form action="registration.php" method="post">
-        Username: <input type="text" name="username" required><br>
-        Password: <input type="password" name="password" required><br>
-        Confirm Password: <input type="password" name="confirm_password" required><br>
-        Email: <input type="email" name="email" required><br>
-        <input type="submit" value="Register">
-    </form>
+    <div class="registration-wrapper">
+        <h2>Registration</h2>
+        <form action="registration.php" method="post">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" name="confirm_password" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+            <input type="submit" class="btn" value="Register">
+        </form>
+    </div>
 </body>
 </html>

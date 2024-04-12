@@ -1,5 +1,3 @@
-/* login.css */
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
@@ -10,7 +8,7 @@ body {
     margin: 0;
 }
 
-.login-wrapper {
+.registration-wrapper {
     background: #fff;
     padding: 40px;
     border-radius: 5px;
@@ -20,12 +18,12 @@ body {
     max-width: 350px;
 }
 
-h2 {
+.registration-wrapper h2 {
     margin-bottom: 20px;
     color: #333;
 }
 
-p {
+.registration-wrapper p {
     margin-bottom: 20px;
     color: #666;
 }
@@ -56,7 +54,6 @@ p {
 }
 
 .help-block {
-    display: block;
     color: red;
     margin-top: 5px;
 }
@@ -73,7 +70,7 @@ p {
 }
 
 .btn:hover {
-    background-color: #4CAF50;
+    background-color: #45a049;
 }
 
 a {

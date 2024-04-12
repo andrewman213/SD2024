@@ -1,16 +1,21 @@
-let commentsVisible = {}; // We maken dit een object om de zichtbaarheid per post bij te houden
+let commentsVisible = {}; // Object om de zichtbaarheid per post bij te houden
 
 function openCommentsModal(postId) {
-    const commentsContainer = document.getElementById(`comments-${postId}`);
-    if (!commentsContainer) {
-        console.error(`Comments container voor post ID ${postId} bestaat niet.`);
-        return; // Stop de functie als het element niet gevonden wordt
+    // Element voor het tonen van reacties
+    const commentsList = document.getElementById(`comments-list-${postId}`);
+    
+    // Controleren of het element bestaat
+    if (!commentsList) {
+        console.error(`Element voor reacties van post ID ${postId} bestaat niet.`);
+        return;
     }
 
-    commentsVisible[postId] = !commentsVisible[postId]; // Toggle de zichtbaarheid
+    // Toggle zichtbaarheid
+    commentsVisible[postId] = !commentsVisible[postId];
+    commentsList.style.display = commentsVisible[postId] ? 'block' : 'none';
 
     if (commentsVisible[postId]) {
-        commentsContainer.style.display = 'block'; // Toon de comments container
+        // Ophalen en tonen van reacties
         fetch('get_comments.php', {
             method: 'POST',
             body: JSON.stringify({ post_id: postId }),
@@ -18,32 +23,20 @@ function openCommentsModal(postId) {
         })
         .then(response => response.json())
         .then(comments => {
-            commentsContainer.innerHTML = ''; // Clear existing comments
+            commentsList.innerHTML = ''; // Reactielijst leegmaken
             comments.forEach(comment => {
-                const commentContainer = document.createElement('div');
-                commentContainer.className = 'comment-container';
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment';
+                commentDiv.textContent = comment.comment; // Hier moet je ervoor zorgen dat dit het juiste veld is uit je JSON
 
-                const textElement = document.createElement('div');
-                textElement.className = 'comment-text';
-                textElement.textContent = comment.comment; // Gebruikt de 'comment' eigenschap direct
-
-                const dateElement = document.createElement('div');
-                dateElement.className = 'comment-date';
-                dateElement.textContent = comment.created_at;
-
-                commentContainer.appendChild(textElement);
-                commentContainer.appendChild(dateElement);
-
-                commentsContainer.appendChild(commentContainer);
+                // Voeg toe aan de lijst
+                commentsList.appendChild(commentDiv);
             });
         })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    } else {
-        commentsContainer.style.display = 'none'; // Verberg de comments container
+        .catch(error => console.error('Fout bij ophalen van reacties:', error));
     }
 }
+
 
 function submitComment(postId, commentText, commentButton) {
     const formData = new FormData();
@@ -56,7 +49,7 @@ function submitComment(postId, commentText, commentButton) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data); // For debugging
+        console.log(data); // Voor debuggen
         if (data.success) {
             // Herlaad de pagina om de nieuwe commentaartelling te zien
             window.location.reload();
@@ -70,7 +63,7 @@ function submitComment(postId, commentText, commentButton) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.comments form').forEach(form => {
+    document.querySelectorAll('.comments .comment-form form').forEach(form => {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             const postId = this.querySelector('input[name="post_id"]').value;

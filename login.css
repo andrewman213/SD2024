@@ -1,3 +1,5 @@
+/* login.css - Styles for login page */
+
 /* login.css */
 
 body {
@@ -10,22 +12,47 @@ body {
     margin: 0;
 }
 
-.login-wrapper {
+.login-container {
     background: #fff;
     padding: 40px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
     text-align: center;
-    width: 100%;
     max-width: 350px;
+    width: 100%;
+}
+
+.login-form {
+    margin: auto;
+    width: 100%; /* Adjust this value if needed to center the form within the container */
+}
+
+/* ... rest van je CSS ... */
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+.login-wrapper {
+    width: 350px;
+    padding: 20px;
+    margin: 100px auto;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 h2 {
+    text-align: center;
     margin-bottom: 20px;
 }
 
 p {
-    margin-bottom: 20px;
+    text-align: center;
 }
 
 .form-group {
@@ -34,39 +61,36 @@ p {
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: .5rem;
 }
 
 .form-control {
-    width: calc(100% - 20px);
+    width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    margin-bottom: 10px; /* To ensure space between the inputs and error messages */
 }
 
 .help-block {
-    display: block;
     color: red;
-    margin-top: 5px;
 }
 
 .btn {
-    width: calc(100% - 20px);
+    width: 100%;
     padding: 10px;
+    background-color: #5cb85c;
     border: none;
     border-radius: 4px;
     color: white;
-    background-color: #4CAF50;
     cursor: pointer;
 }
 
 .btn:hover {
-    background-color: #45a049;
+    background-color: #4cae4c;
 }
 
 a {
-    color: #4CAF50;
+    color: #5cb85c;
     text-decoration: none;
 }
 

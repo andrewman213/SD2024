@@ -78,7 +78,7 @@ body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     background-color: #f4f4f4;
-    padding-top: 100px; /* Aangepast om overlap met de vaste header te voorkomen */
+    padding-top: 200px; /* Aangepast om overlap met de vaste header te voorkomen */
 }
 
 /* Header styling */
@@ -191,6 +191,4 @@ footer {
 header {
     transition: top 0.3s; /* Soepele overgang voor het verbergen en tonen van de header */
 }
-
-/* Rest van je CSS... */
 

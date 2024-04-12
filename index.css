@@ -115,3 +115,27 @@ header h1 {
     max-height: 300px; /* Set a max-height for scrollable content */
     overflow-y: auto;
 }
+
+
+
+/* Styling for sorting buttons */
+.sort-buttons {
+    margin-top: 10px;
+}
+
+.sort-buttons a {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin-right: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.sort-buttons a:hover {
+    background-color: #45a049; /* Darker green on hover */
+}

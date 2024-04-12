@@ -13,10 +13,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
 }
 
 $searchString = '%' . $search . '%';
+
+// Define the default SQL query
 $sql = "SELECT p.post_id, p.user_id, p.text_content, p.image_path, p.video_path, p.created_at, u.username 
         FROM posts p 
         JOIN users u ON p.user_id = u.id 
         WHERE p.text_content LIKE ?";
+
+// Check if sorting option is selected
+if (isset($_GET['sort'])) {
+    $sort = $_GET['sort'];
+    if ($sort == 'oldest') {
+        $sql .= " ORDER BY p.created_at ASC";
+    } elseif ($sort == 'newest') {
+        $sql .= " ORDER BY p.created_at DESC";
+    }
+}
+
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $searchString);
 $stmt->execute();
@@ -34,14 +47,18 @@ $result = $stmt->get_result();
     <h1>Welcome to My Reddit Clone</h1>
     <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
         <p>Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>! You are logged in.</p>
-        <a href="create_post.php">Create Post</a>
-        <a href="logout.php">Logout</a>
     <?php endif; ?>
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <input type="text" name="search" placeholder="Search posts" value="<?php echo htmlspecialchars($search); ?>">
         <input type="submit" value="Search">
     </form>
+
+    <!-- Buttons for sorting -->
+    <div class="sort-buttons">
+        <a href="?sort=oldest">Sort by Oldest</a>
+        <a href="?sort=newest">Sort by Newest</a>
+    </div>
 
     <?php if($result && $result->num_rows > 0): ?>
         <div id="posts">
@@ -79,7 +96,7 @@ $result = $stmt->get_result();
                         Read Comments (<?php echo $comment_count; ?>)
                     </button>
 
-                    <div class="comments">
+                    <div class="comments" id="comments-<?php echo $row['post_id']; ?>"> <!-- Add comment_id as the id -->
                         <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                             <form action="add_comment.php" method="post">
                                 <input type="hidden" name="post_id" value="<?php echo $row['post_id']; ?>">

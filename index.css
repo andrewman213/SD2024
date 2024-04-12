@@ -56,6 +56,18 @@ header h1 {
     margin-bottom: 20px;
     padding-bottom: 10px;
     border-bottom: 1px solid #eee;
+    word-wrap: break-word; /* Ensures that long words can be broken and wrap to the next line */
+}
+
+.post h2, .post span, .post p {
+    overflow-wrap: break-word; /* Allows long words to be able to break and wrap onto the next line */
+    hyphens: auto; /* Automatically add hyphens when needed */
+}
+
+/* Improved post content styling */
+.post p {
+    white-space: pre-wrap; /* Maintains whitespace and wraps content */
+    word-break: break-word; /* Breaks the word at the end of the line */
 }
 
 .post img {
@@ -116,8 +128,6 @@ header h1 {
     overflow-y: auto;
 }
 
-
-
 /* Styling for sorting buttons */
 .sort-buttons {
     margin-top: 10px;
@@ -140,25 +150,19 @@ header h1 {
     background-color: #45a049; /* Darker green on hover */
 }
 
-
-/* CSS aanpassing voor de zoekveld breedte */
+/* CSS adjustment for search field width */
 form {
-    max-width: 600px; /* of elke breedte die je verkiest */
-    display: flex; /* zorgt voor een flex container */
-    justify-content: space-between; /* spreidt items uit */
-    padding: 0 15px; /* geeft wat ruimte aan de zijkanten */
+    max-width: 600px; /* or any width you prefer */
+    display: flex; /* ensures a flex container */
+    justify-content: space-between; /* spreads items out */
+    padding: 0 15px; /* provides some space on the sides */
 }
 
 input[type="text"] {
-    flex-grow: 1; /* Laat het tekstveld groeien om beschikbare ruimte te vullen */
-    margin-right: 10px; /* Voegt ruimte toe tussen het tekstveld en de zoekknop */
+    flex-grow: 1; /* Allows the text field to grow to fill available space */
+    margin-right: 10px; /* Adds space between the text field and the search button */
 }
 
 input[type="submit"] {
-    flex-shrink: 0; /* Voorkomt dat de knop krimpt */
+    flex-shrink: 0; /* Prevents the button from shrinking */
 }
-
-
-
-
-

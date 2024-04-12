@@ -11,11 +11,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 require_once 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $title = $_POST['title'] ?? ''; // Nieuw
+    $title = $_POST['title'] ?? ''; 
     $text_content = $_POST['text_content'] ?? '';
     $image_path = '';
 
-    // Verwerk de afbeelding als deze bestaat.
     if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
         $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
         $filename = $_FILES["image"]["name"];

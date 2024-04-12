@@ -1,9 +1,9 @@
 <?php
 // Database credentials
 $servername = "localhost";
-$username = "root"; // Your MySQL username
-$password = ""; // Your MySQL password
-$dbname = "reddit_clone"; // Your MySQL database name
+$username = "root"; 
+$password = ""; 
+$dbname = "reddit_clone"; 
 
 // Attempt to establish a connection to the MySQL database
 $conn = new mysqli($servername, $username, $password, $dbname);

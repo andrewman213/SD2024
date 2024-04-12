@@ -1,7 +1,6 @@
 <?php include 'header.php'; ?>
 
 <?php
-// manage_profile.php
 session_start();
 
 // Check if the user is logged in, otherwise redirect to login page
@@ -47,7 +46,6 @@ $stmt->close();
 </head>
 <body>
     <h1>Profile Management</h1>
-    <!-- Display the logged-in user's name -->
     <p class="welcome-message">Welcome <?php echo htmlspecialchars($_SESSION['username']); ?>, manage your profile here.</p>
 
     <div class="posts-container">
@@ -56,7 +54,6 @@ $stmt->close();
                 <div class="post-content">
                     <h3><?php echo htmlspecialchars($row['text_content']); ?></h3>
                     <?php if ($row['image_path']): ?>
-                        <!-- Use the value from the database directly -->
                         <img src="<?php echo htmlspecialchars($row['image_path']); ?>" alt="Post Image" class="post-image">
                     <?php endif; ?>
                 </div>

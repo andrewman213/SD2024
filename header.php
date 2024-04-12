@@ -36,7 +36,7 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
             var currentScroll = window.pageYOffset || document.documentElement.scrollTop;
             if (currentScroll > lastScrollTop) {
                 // Scroll down
-                header.style.top = "-70px"; // Adjust the value to the height of your header
+                header.style.top = "-70px"; 
             } else {
                 // Scroll up
                 header.style.top = "0";
@@ -44,6 +44,5 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
             lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
         }, false);
     </script>
-    <!-- The rest of the page content goes here -->
 </body>
 </html>

@@ -1,23 +1,21 @@
-/* Reset margin and padding for all elements */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box; /* This ensures padding does not affect total width */
 }
 
-/* General styles */
+
 body {
     font-family: Arial, sans-serif;
-    padding-top: 70px; /* Space for the fixed header, adjust as needed */
+    padding-top: 70px; 
 }
 
-/* Header styles */
 header {
     background-color: darkred;
     color: white;
     position: fixed;
     top: 0;
-    left: 0; /* Added to ensure the header extends to the left edge */
+    left: 0;
     width: 100%;
     z-index: 1000;
     transition: padding 0.3s, transform 0.3s, top 0.3s; /* Smooth transition for the header */
@@ -51,7 +49,6 @@ nav ul li a:hover {
     text-decoration: underline;
 }
 
-/* Scroll effect */
 header.scrolling-active {
     padding: 5px 0;
 }
@@ -60,37 +57,32 @@ header.scrolling-active nav ul li a {
     transform: scale(0.9);
 }
 
-/* Hide header on scroll down */
 header {
-    transition: top 0.3s; /* Smooth transition for hiding and showing the header */
+    transition: top 0.3s; 
 }
-/* index.css - Gecombineerde styles */
 
-/* Reset margins and paddings for all elements */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Basic styling */
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     background-color: #f4f4f4;
-    padding-top: 200px; /* Aangepast om overlap met de vaste header te voorkomen */
+    padding-top: 200px; 
 }
 
-/* Header styling */
 header {
-    background-color: #333; /* Je kunt de kleur kiezen die je wilt */
+    background-color: #333; 
     color: white;
     padding: 1rem 0;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 999;
-    transition: padding 0.3s, transform 0.3s; /* Smooth transition for the header */
+    transition: padding 0.3s, transform 0.3s; 
 }
 
 header h1 {
@@ -98,13 +90,11 @@ header h1 {
     padding: 10px 0;
 }
 
-/* Link styles */
 a {
-    color: white; /* Aangepast voor betere zichtbaarheid */
+    color: white; 
     text-decoration: none;
 }
 
-/* Navigation bar styles */
 nav ul {
     padding: 0;
     list-style: none;
@@ -180,14 +170,11 @@ footer {
     width: 100%;
 }
 
-/* Responsive styles (indien nodig) */
 @media (max-width: 768px) {
-    /* Voeg hier je responsive styles toe */
 }
 
 
 
-/* Verberg header bij het naar beneden scrollen */
 header {
     transition: top 0.3s; /* Soepele overgang voor het verbergen en tonen van de header */
 }

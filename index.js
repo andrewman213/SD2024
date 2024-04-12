@@ -1,21 +1,17 @@
-let commentsVisible = {}; // Object om de zichtbaarheid per post bij te houden
+let commentsVisible = {}; 
 
 function openCommentsModal(postId) {
-    // Element voor het tonen van reacties
     const commentsList = document.getElementById(`comments-list-${postId}`);
     
-    // Controleren of het element bestaat
     if (!commentsList) {
         console.error(`Element voor reacties van post ID ${postId} bestaat niet.`);
         return;
     }
 
-    // Toggle zichtbaarheid
     commentsVisible[postId] = !commentsVisible[postId];
     commentsList.style.display = commentsVisible[postId] ? 'block' : 'none';
 
     if (commentsVisible[postId]) {
-        // Ophalen en tonen van reacties
         fetch('get_comments.php', {
             method: 'POST',
             body: JSON.stringify({ post_id: postId }),
@@ -23,13 +19,12 @@ function openCommentsModal(postId) {
         })
         .then(response => response.json())
         .then(comments => {
-            commentsList.innerHTML = ''; // Reactielijst leegmaken
+            commentsList.innerHTML = ''; 
             comments.forEach(comment => {
                 const commentDiv = document.createElement('div');
                 commentDiv.className = 'comment';
-                commentDiv.textContent = comment.comment; // Hier moet je ervoor zorgen dat dit het juiste veld is uit je JSON
+                commentDiv.textContent = comment.comment; 
 
-                // Voeg toe aan de lijst
                 commentsList.appendChild(commentDiv);
             });
         })
@@ -51,7 +46,6 @@ function submitComment(postId, commentText, commentButton) {
     .then(data => {
         console.log(data); // Voor debuggen
         if (data.success) {
-            // Herlaad de pagina om de nieuwe commentaartelling te zien
             window.location.reload();
         } else {
             alert('Failed to post comment: ' + data.message);

@@ -1,8 +1,6 @@
 <?php
-// delete_post.php
 session_start();
 
-// Check if the user is logged in and is an admin
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || !$_SESSION["is_admin"]) {
     header("location: login.php");
     exit;
@@ -10,35 +8,27 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || !$_SESSIO
 
 require_once "config.php";
 
-// Check if a post_id is received via POST
 if (isset($_POST["post_id"]) && !empty(trim($_POST["post_id"]))) {
-    // Prepare a delete statement
     $sql = "DELETE FROM posts WHERE post_id = ?";
 
     if ($stmt = $conn->prepare($sql)) {
-        // Bind variables to the prepared statement as parameters
         $stmt->bind_param("i", $param_id);
 
-        // Set parameters
         $param_id = trim($_POST["post_id"]);
 
         // Attempt to execute the prepared statement
         if ($stmt->execute()) {
-            // Redirect to index.php after deletion
             header("location: index.php");
             exit();
         } else {
             echo "Oops! Something went wrong. Please try again later.";
         }
 
-        // Close statement
         $stmt->close();
     }
     
-    // Close connection
     $conn->close();
 } else {
-    // If no post_id is set, give an error message
     echo "No post_id parameter was passed to this script.";
 }
 ?>
@@ -57,7 +47,6 @@ if (isset($_POST["post_id"]) && !empty(trim($_POST["post_id"]))) {
         <a href="create_post.php">Create Post</a>
         <a href="logout.php">Logout</a>
 
-        <!-- Display the posts -->
         <?php if ($result && $result->num_rows > 0): ?>
             <div id="posts">
                 <?php while ($row = $result->fetch_assoc()): ?>
@@ -71,7 +60,6 @@ if (isset($_POST["post_id"]) && !empty(trim($_POST["post_id"]))) {
                             <video src="<?php echo htmlspecialchars($row['video_path']); ?>" controls></video>
                         <?php endif; ?>
                         <span>Posted on: <?php echo htmlspecialchars($row['created_at']); ?></span>
-                        <!-- Admin-specific feature: delete button for each post -->
                         <?php if ($isAdmin): ?>
                             <form action="delete_post.php" method="post" style="display: inline;">
                                 <input type="hidden" name="post_id" value="<?php echo $row['post_id']; ?>">

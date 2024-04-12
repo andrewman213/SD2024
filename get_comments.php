@@ -1,7 +1,5 @@
 <?php
-// get_comments.php
 
-// Start the session and include the database configuration
 session_start();
 require 'config.php';
 
@@ -9,7 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents('php://input'), true);
     $post_id = $data['post_id'];
 
-    // Prepare SQL to fetch comments. Ensure column names match your database structure.
     $sql = "SELECT user_id, comment, created_at FROM comments WHERE post_id = ?";
 
     if ($stmt = $conn->prepare($sql)) {

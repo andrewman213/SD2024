@@ -14,7 +14,7 @@ h1 {
 
 form {
     width: 100%;
-    max-width: 500px; /* Adjust this value to change the width of your forms */
+    max-width: 500px; 
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     background: white;

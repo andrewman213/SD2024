@@ -3,10 +3,8 @@
 
 
 <?php
-// Include the database configuration file
 require_once 'config.php';
 
-// Function to sanitize data to prevent SQL injection
 function test_input($data) {
   $data = trim($data);
   $data = stripslashes($data);
@@ -14,7 +12,6 @@ function test_input($data) {
   return $data;
 }
 
-// Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Assign and sanitize POST data
   $username = test_input($_POST["username"]);
@@ -24,14 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Check if passwords match
   if ($password === $confirm_password) {
-      // Check if user exists
       $stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
       $stmt->bind_param("s", $username);
       $stmt->execute();
       $stmt->store_result();
       
       if($stmt->num_rows == 0) {
-          // No user exists, proceed with registration
           $stmt->close();
           $insert = $conn->prepare("INSERT INTO users (username, password, email) VALUES (?, ?, ?)");
           $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Hash the password before saving to the database
@@ -47,7 +42,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           }
           $insert->close();
       } else {
-          // User exists
           echo "User already exists";
       }
   } else {
@@ -64,7 +58,7 @@ $conn->close();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
-    <link rel="stylesheet" href="registration.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="registration.css"> 
 </head>
 <body>
     <div class="registration-wrapper">
